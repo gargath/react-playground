@@ -1,13 +1,3 @@
 {
-  "presets": [
-    "react-app",
-	[
-		"@babel/env",
-    	{
-      		targets: {
-        		chrome: "70",
-      		},
-    	}
-	],
-  ]
+  "presets": ["react", "env"],
 }

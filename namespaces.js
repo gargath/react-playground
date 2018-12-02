@@ -1,7 +1,10 @@
 import React from 'react';
-import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem, Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
+import { Dispatcher } from 'flux';
 
-export default class NamespaceDropdown extends React.Component {
+export const dispatcher = new Dispatcher()
+
+export class NamespaceDropdown extends React.Component {
   constructor(props) {
     super(props);
 
@@ -11,7 +14,6 @@ export default class NamespaceDropdown extends React.Component {
 	  namespaces: props.namespaces,
 	  selectedNamespace: 0
     };
-	console.log(this.state)
   }
 
   toggle() {
@@ -21,8 +23,11 @@ export default class NamespaceDropdown extends React.Component {
   }
 
   setSelected(i) {
-	  console.log(i)
 	  this.setState({selectedNamespace: i})
+	  dispatcher.dispatch({
+		  type: 'namespaceChange',
+		  newSelection: this.state.namespaces[i]
+	  })
   }
 
   createEntries() {
@@ -34,7 +39,6 @@ export default class NamespaceDropdown extends React.Component {
   }
 
   render() {
-	  console.log(this.state)
     return (
 	<div>Namespace:&nbsp;
       <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -49,5 +53,37 @@ export default class NamespaceDropdown extends React.Component {
         </DropdownMenu>
       </ButtonDropdown></div>
     );
+  }
+}
+
+export class NamespaceCard extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			selectedNamespace: ''
+		}
+	}
+
+	componentDidMount() {
+		this.token = dispatcher.register( dispatch => {
+			if (dispatch.type = 'namespaceChange') {
+				this.setState({selectedNamespace: dispatch.newSelection})
+			}
+		});
+	}
+
+	componentWillUnmount() {
+		dispatcher.unregister(this.token)
+	}
+
+  render() {
+	  return (
+		  <Card>
+		  	<CardBody>
+		  		<CardTitle>SelectedNamespace</CardTitle>
+		  		<CardText>{ this.state.selectedNamespace }</CardText>
+		  	</CardBody>
+		  </Card>
+	  );
   }
 }

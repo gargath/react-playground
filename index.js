@@ -9,8 +9,7 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 
-import NamespaceDropdown  from './namespaces.js'
-
+import { NamespaceDropdown, NamespaceCard } from './namespaces.js'
 
 const App = () => (
   <div className="App">
@@ -27,8 +26,8 @@ const App = () => (
 				</NavText>
 			</NavItem>
 			<NavItem>
-				<div style={{ paddingTop:'0.75ex'}}>
-					<NamespaceDropdown namespaces={['default', 'some', 'somemore', 'someother']}/>
+				<div style={{ paddingTop:'0.0ex'}}>
+					<NamespaceDropdown namespaces={['default', 'some', 'somemore', 'someother']} />
 				</div>
 			</NavItem>
 		</SideNav.Nav>
@@ -36,7 +35,7 @@ const App = () => (
 
     <img className="App-Logo" src={logo} alt="React Logo" />
     <h1 className="App-Title">Hello Parcel x React</h1>
-					<NamespaceDropdown namespaces={['foo']}/>
+	<NamespaceCard />
   </div>
 );
 
